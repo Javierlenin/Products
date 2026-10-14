@@ -32,6 +32,14 @@ app.get('/products', (req, res) => {
 
 app.post('/products', (req, res) => {
     const { name, price, stock, category } = req.body;
+
+    if (!name || !price ) {
+        return res.status(400).json({ error: 'Los campos de nombre y precio son obligatorios' });
+    }
+    if ( parseFloat(price || 0 ) <= 0) {
+        return res.status(400).json({ error: 'El precio debe ser mayor a 0' });
+    }
+
     const newProduct = {
         id: products.length + 1,
         name,
